@@ -46,12 +46,13 @@ string mesToNumber(string month) {
     }
 }
 
-void leer(string archivo, vector<int> &vector) {
+void leer(string archivo, vector<Registro> &vector) {
     ifstream file(archivo);
     if (file.is_open()) {
         cout << "hola" << endl;
         string clave;
         string line;
+        int count = 0;
         while (getline(file, line)) {
             clave="";
             for (int i = 0; i < 3; i++) {
@@ -71,11 +72,9 @@ void leer(string archivo, vector<int> &vector) {
                 dia.pop_back();
                 clave+= "0" + dia;
             }
-            
-
-            cout << clave << endl;
-            vector.push_back(stoi(clave));
-            //cout << stoi(clave) << endl;
+            vector[count].setClave(stoi(clave));
+            vector[count].setData(line);
+            count ++;
 
         }
         file.close();
@@ -87,7 +86,7 @@ void leer(string archivo, vector<int> &vector) {
 }
 
 int main() {
-    vector<int> vector;
+    vector<Registro> vector;
     leer("bitacora.txt", vector);
     return 0;
 }
