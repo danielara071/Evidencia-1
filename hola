@@ -1,47 +1,48 @@
 #include <iostream>
 #include <fstream>
 #include <vector>
+#include "Registro.h"
 
 using namespace std;
 
-int mesToNumber(string month) {
+string mesToNumber(string month) {
     if (month == "Jan") {
-        return 1;
+        return "1";
     }
     if (month == "Feb") {
-        return 2;
+        return "2";
     }
     if (month == "Mar") {
-        return 3;
+        return "3";
     }
     if (month == "Apr") {
-        return 4;
+        return "4";
     }
     if (month == "May") {
-        return 5;
+        return "5";
     }
     if (month == "Jun") {
-        return 6;
+        return "6";
     }
     if (month == "Jul") {
-        return 7;
+        return "7";
     }
     if (month == "Aug") {
-        return 8;
+        return "8";
     }
     if (month == "Sep") {
-        return 9;
+        return "9";
     }
     if (month == "Oct") {
-        return 10;
+        return "10";
     }
     if (month == "Nov") {
-        return 11;
+        return "11";
     }
     if (month == "Dec") {
-        return 12;
+        return "12";
     } else {
-        return -1; // Si el mes no es válido
+        return "-1"; // Si el mes no es válido
     }
 }
 
@@ -55,14 +56,34 @@ void leer(string archivo, vector<int> &vector) {
             clave="";
             for (int i = 0; i < 3; i++) {
                 clave += line[i];
-                mesToNumber(clave);
+                
             }
+            clave = mesToNumber(clave);
+            string dia = "";
+            
+            for(int i = 4; i<=5; i++){
+                dia += line[i];
+            }
+            if(dia[1] != ' '){
+                clave += dia;
+            }
+            else{
+                dia.pop_back();
+                clave+= "0" + dia;
+            }
+            
+
             cout << clave << endl;
+            vector.push_back(stoi(clave));
+            //cout << stoi(clave) << endl;
+
         }
         file.close();
-    } else {
+    } 
+    else {
         cout << "Archivo inexistente" << endl;
     }
+
 }
 
 int main() {
