@@ -72,7 +72,7 @@ void leer(string archivo, vector<Registro> &vector) {
                 dia.pop_back();
                 clave+= "0" + dia;
             }
-            vector[count].setClave(stoi(clave));
+            vector[count].setClave(stoi(clave));// estas dos lineas no me estan jalando
             vector[count].setData(line);
             count ++;
 
