@@ -1,0 +1,119 @@
+#include <iostream>
+#include <fstream>
+#include <vector>
+#include "Registro.h"
+
+using namespace std;
+
+string mesToNumber(string month) {
+    if (month == "Jan") {
+        return "1";
+    }
+    if (month == "Feb") {
+        return "2";
+    }
+    if (month == "Mar") {
+        return "3";
+    }
+    if (month == "Apr") {
+        return "4";
+    }
+    if (month == "May") {
+        return "5";
+    }
+    if (month == "Jun") {
+        return "6";
+    }
+    if (month == "Jul") {
+        return "7";
+    }
+    if (month == "Aug") {
+        return "8";
+    }
+    if (month == "Sep") {
+        return "9";
+    }
+    if (month == "Oct") {
+        return "10";
+    }
+    if (month == "Nov") {
+        return "11";
+    }
+    if (month == "Dec") {
+        return "12";
+    } else {
+        return "-1"; // Si el mes no es válido
+    }
+}
+
+void leer(string archivo, vector<Registro> &vector) {
+    ifstream file(archivo);
+    if (file.is_open()) {
+        cout << "hola" << endl;
+        string clave;
+        string line;
+        int count = 0;
+        while (getline(file, line)) {
+            clave="";
+            for (int i = 0; i < 3; i++) {
+                clave += line[i];
+                
+            }
+            clave = mesToNumber(clave);
+            string dia = "";
+            
+            for(int i = 4; i<=5; i++){
+                dia += line[i];
+            }
+            if(dia[1] != ' '){
+                clave += dia;
+            }
+            else{
+                dia.pop_back();
+                clave+= "0" + dia;
+            }
+            vector.push_back(Registro(stoi(clave),line));
+        }
+        file.close();
+    } 
+    else {
+        cout << "Archivo inexistente" << endl;
+    }
+
+}
+void print(vector<Registro> &a, int n) {
+    for (int i = 0; i < n; i++) {
+        cout << a[i].getClave() << endl;
+    }
+    
+}
+
+void swap(vector <Registro> &arreglo, int i, int j ){
+    Registro buffer = arreglo[i];
+    arreglo[i] = arreglo[j];
+    arreglo[j] = buffer;
+}
+
+void selectionSort(vector <Registro>  &arreglo, int n){
+  
+    for (int i = 0; i < n; i++){
+        int indexMin = i;
+        for (int j = i +1;j <= n ; j++){
+            if ( arreglo[j].getClave() <  arreglo[indexMin].getClave()){
+                indexMin = j;
+            }
+        }
+        swap(arreglo, indexMin, i);
+    }
+}
+
+
+
+int main() {
+    vector<Registro> vector;
+    leer("bitacora.txt", vector);
+    selectionSort(vector, vector.size());
+    print(vector, 500);
+
+    return 0;
+}
